@@ -10,6 +10,11 @@ export class TaskService {
     return this.tasks;
   }
 
+  public findOneTask(id: string): Task {
+    const response = this.tasks.find((task) => task.id == id);
+    return response;
+  }
+
   public saveTask(task: Task): Task {
     const newTask = new Task(v4(), task.title, task.description, task.status);
 

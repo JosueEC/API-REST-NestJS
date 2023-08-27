@@ -15,6 +15,11 @@ export class TaskController {
     return this.taskService.findTask();
   }
 
+  @Get(':taskID')
+  public getOneTask(@Param('taskID') id: string): Task {
+    return this.taskService.findOneTask(id);
+  }
+
   @Post()
   public postTask(@Body() task: Task): Task {
     return this.taskService.saveTask(task);
