@@ -1,7 +1,7 @@
 import { TaskStatus } from './enums/enums';
 
 export class Task {
-  public id: string;
+  public id?: string;
   public title: string;
   public description: string;
   public status: TaskStatus;

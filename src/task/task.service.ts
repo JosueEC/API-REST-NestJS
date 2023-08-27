@@ -1,31 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { TaskStatus } from './enums/enums';
 import { Task } from './task.entity';
+import { v4 } from 'uuid';
 
 @Injectable()
 export class TaskService {
-  private tasks: Task[] = [
-    {
-      id: '1',
-      title: 'Task One',
-      description: 'Make the task dude!',
-      status: TaskStatus.PENDING,
-    },
-  ];
+  private tasks: Task[];
 
   public findTask(): Task[] {
     return this.tasks;
   }
 
-  public saveTask(title: string, description: string): Task {
-    const task = new Task(
-      new Date().toISOString(),
-      title,
-      description,
-      TaskStatus.PENDING,
-    );
+  public saveTask(task: Task): Task {
+    const newTask = new Task(v4(), task.title, task.description, task.status);
 
-    this.tasks.push(task);
+    this.tasks.push(newTask);
     return task;
   }
 
