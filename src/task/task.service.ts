@@ -22,7 +22,14 @@ export class TaskService {
     return task;
   }
 
-  public updateTask() {}
+  public updateTask(id: string, task: Task): Task {
+    const check = this.tasks.find((task) => task.id == id);
+
+    const updatedTask = Object.assign(check, task);
+    this.tasks.map((task) => (task.id == check.id ? updatedTask : task));
+
+    return updatedTask;
+  }
 
   public removeTask(id: string): Task {
     const removedTask = this.tasks.find((task) => (task.id = id));
