@@ -4,7 +4,7 @@ import { v4 } from 'uuid';
 
 @Injectable()
 export class TaskService {
-  private tasks: Task[];
+  private tasks: Task[] = [];
 
   public findTask(): Task[] {
     return this.tasks;
@@ -18,5 +18,14 @@ export class TaskService {
   }
 
   public updateTask() {}
-  public removeTask() {}
+
+  public removeTask(id: string): Task {
+    const removedTask = this.tasks.find((task) => (task.id = id));
+
+    this.tasks = this.tasks.filter((task) => {
+      return task.id !== id;
+    });
+
+    return removedTask;
+  }
 }
