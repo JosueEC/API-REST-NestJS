@@ -25,7 +25,9 @@ export class TaskService {
   }
 
   public async updateTask(id: string, task: UpadateTaskDto): Promise<Task> {
-    const response = await this.taskModel.findByIdAndUpdate(id, task);
+    const response = await this.taskModel.findByIdAndUpdate({ _id: id }, task, {
+      new: true,
+    });
     return response;
   }
 

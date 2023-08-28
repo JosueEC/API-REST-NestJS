@@ -2,7 +2,8 @@ import { TaskStatus } from '../enums/enums';
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({
-  timestamps: true,
+  timestamps: false,
+  versionKey: false,
 })
 export class Task {
   @Prop({
