@@ -1,43 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { Task } from './schemas/task.schema';
-import { v4 } from 'uuid';
 
 @Injectable()
 export class TaskService {
   private tasks: Task[] = [];
 
-  public findTask(): Task[] {
-    return this.tasks;
-  }
+  // Esta es la forma en la que se inyecta el modelo dentro de
+  // nuestra clase, para poder acceder a sus metodos
+  constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
 
-  public findOneTask(id: string): Task {
-    const response = this.tasks.find((task) => task.id == id);
+  public findTask() {
+    const response = this.taskModel.find();
+    console.info(typeof response);
     return response;
   }
 
-  public saveTask(task: Task): Task {
-    const newTask = new Task(v4(), task.title, task.description, task.status);
-
-    this.tasks.push(newTask);
-    return task;
+  public findOneTask(id: string) {
+    return this.taskModel.findById({ _id: id });
   }
 
-  public updateTask(id: string, task: Task): Task {
-    const check = this.tasks.find((task) => task.id == id);
-
-    const updatedTask = Object.assign(check, task);
-    this.tasks.map((task) => (task.id == check.id ? updatedTask : task));
-
-    return updatedTask;
+  public saveTask(task: Task) {
+    return this.taskModel.create(task);
   }
 
-  public removeTask(id: string): Task {
-    const removedTask = this.tasks.find((task) => (task.id = id));
+  public updateTask(id: string, task: Task) {
+    return this.taskModel.findByIdAndUpdate(id, task);
+  }
 
-    this.tasks = this.tasks.filter((task) => {
-      return task.id !== id;
-    });
-
-    return removedTask;
+  public removeTask(id: string) {
+    return this.taskModel.findByIdAndRemove({ _id: id });
   }
 }

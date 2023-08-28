@@ -19,17 +19,17 @@ export class TaskController {
   }
 
   @Get()
-  public getTask(): Task[] {
+  public getTask() {
     return this.taskService.findTask();
   }
 
   @Get(':taskID')
-  public getOneTask(@Param('taskID') id: string): Task {
+  public getOneTask(@Param('taskID') id: string) {
     return this.taskService.findOneTask(id);
   }
 
   @Post()
-  public postTask(@Body() task: Task): Task {
+  public postTask(@Body() task: Task) {
     return this.taskService.saveTask(task);
   }
 
@@ -39,7 +39,7 @@ export class TaskController {
   }
 
   @Delete(':taskID')
-  public deleteTask(@Param('taskID') id: string): Task {
+  public deleteTask(@Param('taskID') id: string) {
     return this.taskService.removeTask(id);
   }
 }
