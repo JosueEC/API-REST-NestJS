@@ -7,7 +7,7 @@ import { Task } from './schemas/task.schema';
 
 @Injectable()
 export class TaskService {
-  constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
+  constructor(@InjectModel('Task') private taskModel: Model<Task>) {}
 
   public async findTask(): Promise<Task[]> {
     const response = await this.taskModel.find();
