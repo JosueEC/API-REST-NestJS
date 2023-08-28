@@ -5,7 +5,7 @@ import {
   IsString,
   MaxLength,
   MinLength,
-} from 'class-validator/types/decorator/decorators';
+} from 'class-validator';
 
 export class UpadateTaskDto {
   @IsString()
