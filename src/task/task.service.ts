@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateTaskDto } from './dto/createTask.dto';
@@ -16,23 +20,45 @@ export class TaskService {
 
   public async findOneTask(id: string): Promise<Task> {
     const response = await this.taskModel.findById({ _id: id });
+
+    if (!response) {
+      throw new NotFoundException('Task noy found');
+    }
+
     return response;
   }
 
   public async saveTask(task: CreateTaskDto): Promise<Task> {
-    const response = await this.taskModel.create(task);
-    return response;
+    try {
+      const response = await this.taskModel.create(task);
+      return response;
+    } catch (error) {
+      if (error === 11000) {
+        throw new ConflictException('Task already exists');
+      }
+      throw error;
+    }
   }
 
   public async updateTask(id: string, task: UpadateTaskDto): Promise<Task> {
     const response = await this.taskModel.findByIdAndUpdate({ _id: id }, task, {
       new: true,
     });
+
+    if (!response) {
+      throw new NotFoundException('Task not found');
+    }
+
     return response;
   }
 
   public async removeTask(id: string): Promise<Task> {
     const response = await this.taskModel.findByIdAndRemove({ _id: id });
+
+    if (!response) {
+      throw new NotFoundException('Task not found');
+    }
+
     return response;
   }
 }

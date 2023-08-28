@@ -10,6 +10,7 @@ import {
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/createTask.dto';
 import { UpadateTaskDto } from './dto/updateTask.dto';
+import { Task } from './schemas/task.schema';
 
 @Controller('task')
 export class TaskController {
@@ -21,22 +22,25 @@ export class TaskController {
   }
 
   @Get(':taskID')
-  public getOneTask(@Param('taskID') id: string) {
-    return this.taskService.findOneTask(id);
+  public async getOneTask(@Param('taskID') id: string): Promise<Task> {
+    return await this.taskService.findOneTask(id);
   }
 
   @Post()
-  public postTask(@Body() task: CreateTaskDto) {
-    return this.taskService.saveTask(task);
+  public async postTask(@Body() task: CreateTaskDto): Promise<Task> {
+    return await this.taskService.saveTask(task);
   }
 
   @Put(':taskID')
-  public putTask(@Param('taskID') id: string, @Body() task: UpadateTaskDto) {
-    return this.taskService.updateTask(id, task);
+  public async putTask(
+    @Param('taskID') id: string,
+    @Body() task: UpadateTaskDto,
+  ): Promise<Task> {
+    return await this.taskService.updateTask(id, task);
   }
 
   @Delete(':taskID')
-  public deleteTask(@Param('taskID') id: string) {
-    return this.taskService.removeTask(id);
+  public async deleteTask(@Param('taskID') id: string): Promise<Task> {
+    return await this.taskService.removeTask(id);
   }
 }
