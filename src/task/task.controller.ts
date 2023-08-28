@@ -6,6 +6,7 @@ import {
   Delete,
   Param,
   Put,
+  HttpCode,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/createTask.dto';
@@ -40,6 +41,7 @@ export class TaskController {
   }
 
   @Delete(':taskID')
+  @HttpCode(204)
   public async deleteTask(@Param('taskID') id: string): Promise<Task> {
     return await this.taskService.removeTask(id);
   }
