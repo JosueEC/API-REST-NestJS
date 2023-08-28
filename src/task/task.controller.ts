@@ -12,11 +12,7 @@ import { Task } from './schemas/task.schema';
 
 @Controller('task')
 export class TaskController {
-  private taskService: TaskService;
-
-  constructor(taskService: TaskService) {
-    this.taskService = taskService;
-  }
+  constructor(private readonly taskService: TaskService) {}
 
   @Get()
   public getTask() {
