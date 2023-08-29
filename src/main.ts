@@ -9,6 +9,7 @@ async function bootstrap() {
     methods: ['HEAD', 'GET', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
     credentials: true,
   });
+  app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
