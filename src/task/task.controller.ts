@@ -13,7 +13,7 @@ import { CreateTaskDto } from './dto/createTask.dto';
 import { UpadateTaskDto } from './dto/updateTask.dto';
 import { Task } from './schemas/task.schema';
 
-@Controller('task')
+@Controller('v1/task')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
